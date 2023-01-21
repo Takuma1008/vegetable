@@ -51,9 +51,12 @@ def preprocess(train_df, test_df):
 
 def predict(data, kind):
 
-    train_data = data[data.index < "2022-10"]
+    # train_data = data[data.index < "2022-10"]
+    train_data = data[data.index < "2021-10"]
+    
     # テストデータはテスト期間以前の日付も含まなければいけない
-    test_data = data[data.index >= "2022-01"]
+    # test_data = data[data.index >= "2022-01"]
+    test_data = data[data.index >= "2021-01"]
 
     # 総当たりで、AICが最小となるSARIMAの次数を探す
     max_p = 3
@@ -92,7 +95,10 @@ def predict(data, kind):
 
     SARIMA = sm.tsa.SARIMAX(train_data[kind], order=order, seasonal_order=seasonal_order).fit()
     # 予測
-    pred = SARIMA.predict('2022-01-01', '2022-11-01')
+    # pred = SARIMA.predict('2022-01-01', '2022-11-01')
+    pred = SARIMA.predict('2021-01-01', '2021-11-01')
+    
+    print(f"実際：{data[kind]['2021-11-01']}, 予測：{pred.iloc[-1]}")
 
     return pred.iloc[-1]
 
