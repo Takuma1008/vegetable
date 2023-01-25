@@ -30,11 +30,12 @@ def preprocess(train_df, test_df):
     all_df = pd.concat([train_df, test_df]).reset_index(drop=True)
     all_df.drop('weekno', axis=1, inplace=True)
 
-    # 2016年は中途半端な月から始まっているので除く
-    all_df = all_df.query('20170101 <= date').reset_index(drop=True)
+    # 2005年は中途半端な月から始まっているので除く
+    all_df = all_df.query('20060101 <= date').reset_index(drop=True)
 
     # 月毎に集計する
     vis_df = pd.pivot_table(all_df, index=['year', 'month'], columns='kind', values='mode_price').reset_index()
+    vis_df = vis_df.fillna(0)
 
     # 2022年11月のデータ（予測対象月）のデータをnullにして入れておく
     november_2022 = vis_df.copy()
