@@ -16,6 +16,7 @@ seaborn = "^0.12.2"
 sklearn = "^0.0.post1"
 lightgbm = "^3.3.4"
 statsmodels = "^0.13.5"
+pmdarima = "^2.0.2"
 
 
 [tool.poetry.group.dev.dependencies]
